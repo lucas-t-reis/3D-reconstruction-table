@@ -1,0 +1,44 @@
+Bootstrap: library
+From: ubuntu:20.04
+
+%post 
+	apt-get update
+	apt-get install -y --no-install-recommends python3
+	apt-get -y clean
+	export DEBIAN_FRONTEND=noninteractive
+	export CUDACXX=/usr/bin/nvcc
+	apt-get install -y tzdata
+	apt-get install -y gcc
+	apt-get install -y cmake
+	apt-get install -y git
+	apt-get install -y curl zip unzip tar
+	apt-get install -y \
+    nvidia-cuda-toolkit \
+    nvidia-cuda-toolkit-gcc
+	apt-get install -y \
+    ninja-build \
+    build-essential \
+    libboost-program-options-dev \
+    libboost-filesystem-dev \
+    libboost-graph-dev \
+    libboost-system-dev \
+    libboost-test-dev \
+    libeigen3-dev \
+    libflann-dev \
+    libfreeimage-dev \
+    libmetis-dev \
+    libgoogle-glog-dev \
+    libgflags-dev \
+    libsqlite3-dev \
+    libglew-dev \
+    qtbase5-dev \
+    libqt5opengl5-dev \
+    libcgal-dev \
+    libceres-dev
+    git clone https://github.com/lucas-t-reis/colmap.git
+	cd colmap
+	mkdir build
+	cd build
+	cmake .. -GNinja
+	ninja
+	ninja install
