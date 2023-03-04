@@ -1,3 +1,6 @@
 [submodule "colmap"]
 	path = colmap
 	url = https://github.com/lucas-t-reis/colmap.git
+[submodule "LLFF"]
+	path = LLFF
+	url = git@github.com:lucas-t-reis/LLFF.git
