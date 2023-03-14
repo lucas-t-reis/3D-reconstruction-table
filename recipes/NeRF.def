@@ -53,4 +53,4 @@ From: ubuntu:20.04
 	ninja
 	ninja install
 %environment
-	export PATH=$HOME/miniconda/bin/:$PATH
+	export PATH=$HOME/miniconda/bin:$PATH
