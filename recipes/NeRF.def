@@ -13,7 +13,8 @@ cd ..
 cd nerf
 export PATH=$HOME/miniconda/bin:$PATH
 conda env create -f environment.yml
-conda init bash' > build-anaconda-env.sh
+conda init bash
+source ~/.bashrc' > build-anaconda-env.sh
 
 
 %post
