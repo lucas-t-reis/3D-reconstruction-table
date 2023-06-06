@@ -1,7 +1,7 @@
 import os
 import cv2
 
-def create_video(folder_path, output_filename='output2.mp4', fps=14):
+def create_video(folder_path, output_filename='video_name', fps=14):
     """Create a video from .png images in a folder."""
 
     # Get the paths of all .png images in the folder, sorted by name
@@ -33,4 +33,4 @@ def create_video(folder_path, output_filename='output2.mp4', fps=14):
     out.release()
 
 # usage:
-create_video('C:\\Users\\lucas\\Downloads\\bags\pngs\\3\\')
+create_video('imgs_path')
