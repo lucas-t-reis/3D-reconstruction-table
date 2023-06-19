@@ -2,5 +2,5 @@
 	path = colmap
 	url = https://github.com/lucas-t-reis/colmap.git
 [submodule "instant-ngp"]
-	path = instant-ngp 
+	path = instant-ngp
 	url = https://github.com/NVlabs/instant-ngp
