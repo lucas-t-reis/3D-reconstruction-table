@@ -1,1 +1,15 @@
+# Media
+*.mp4
+*.jpg
 *.txt
+
+# Configuration files
+*.bin
+*.ini
+*.json
+
+# COLMAP
+*.ply
+*.ply.vis
+*.db
+*.cfg
