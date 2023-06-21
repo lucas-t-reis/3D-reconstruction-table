@@ -4,7 +4,6 @@ from time import sleep
 DEFAULT_MESSAGE = 'c - Clockwise | C - Counter clockwise: '
 
 # TODO Use ls -l /dev/ttyACM* + grep to fetch port name
-# TODO trycatch to handle resource busy
 # TODO Controlling rotation based on steps
 
 connection = serial.Serial('/dev/ttyACM0', 9600)
