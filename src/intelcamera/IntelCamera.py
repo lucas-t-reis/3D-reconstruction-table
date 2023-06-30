@@ -3,33 +3,23 @@ import numpy as np
 import cv2
 import time
 
-# This object owns the handles to all connected realsense devices
-pipeline = rs.pipeline()
-
-# Configure the pipeline to streams
-config = rs.config()
-config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
-config.enable_stream(rs.stream.color, 640, 480, rs.format.rgb8, 30)
-
-# Start streaming
-profile = pipeline.start(config)
-
 class IntelCamera:
     def __init__(self):
         self.pipeline = rs.pipeline()
-        self.profile = None
+        self.profile = rs.config()
         self.model = 'D435i'
 
     def config_profile(self, width: int = 640, height: int = 480, fps: int = 30):
-        if profile is None:
-            return
-
-        profile.enable_stream(rs.stream.depth, width, height, rs.format.z16, fps)
-        profile.enable_stream(rs.stream.color, width, height, rs.format.rgb8, fps)
+        # self.profile.enable_stream(rs.stream.depth, width, height, rs.format.z16, fps)
+        self.profile.enable_stream(rs.stream.color, width, height, rs.format.rgb8, fps)
 
     def capture_frame(self):
-        # This call waits until a new coherent set of frames is available on a device
-        frames = self.pipeline.wait_for_frames()
+        try:
+            # This call waits until a new coherent set of frames is available on a device
+            frames = self.pipeline.wait_for_frames()
+        except RuntimeError as ignore:
+            print('Failed to fetch frames')
+            return None
 
         # Get color frame
         color = frames.get_color_frame()
@@ -53,13 +43,15 @@ class IntelCamera:
 
                 time.sleep(delay)
         finally:
-            pipeline.stop()
+            self.pipeline.stop()
 
     def capture_video(self, duration=5, video_name = 'output', codec = 'mp4v'):
         try:
+            self.pipeline.start(self.profile)
+            print(f'Startig capture with {duration} s')
             # Define the codec
             fourcc = cv2.VideoWriter_fourcc(*codec)
-            out = cv2.VideoWriter(f'{video_name}.mp4', fourcc, 20.0, (640, 480))
+            out = cv2.VideoWriter(f'{video_name}.mp4', fourcc, 30, (640, 480))
 
             start_time = time.time()
             while True:
@@ -73,7 +65,7 @@ class IntelCamera:
                     break
         finally:
             out.release()
-            pipeline.stop()
+            self.pipeline.stop()
 
     def stream_camera(self):
         print('Press "q" to close the stream.')
@@ -89,7 +81,7 @@ class IntelCamera:
                     break
         finally:
             cv2.destroyAllWindows()
-            pipeline.stop()
+            self.pipeline.stop()
 
     def stream_depth(self):
         print('Press "q" to close the stream.')
@@ -109,22 +101,14 @@ class IntelCamera:
                     break
         finally:
             cv2.destroyAllWindows()
-            pipeline.stop()
+            self.pipeline.stop()
 
-    def record_rgbd(self, filename='output', duration=5):
+    def record_rgbd(self, duration=5, filename='output'):
         # Start the pipeline with a configuration that enables recording
         self.profile.enable_record_to_file(f'{filename}.bag')
-        pipeline.start(config)
+        self.pipeline.start(self.config)
         
         time.sleep(duration)
         
         # Stop the pipeline
-        pipeline.stop()
-
-
-# Use the functions
-# capture_photos()
-# capture_video()
-# stream_camera()
-# stream_depth()
-# record_rgbd()
+        self.pipeline.stop()
