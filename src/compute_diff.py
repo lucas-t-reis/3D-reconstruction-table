@@ -11,7 +11,6 @@ def scale_mesh(mesh, scale):
     scale_factors = scale / current_dimensions
     transformation_matrix = np.diag(np.append(scale_factors, 1))
 
-    # Apply the transformation
     mesh.apply_transform(transformation_matrix)
 
 def compute_distance(ref_path, rec_path):
@@ -31,7 +30,6 @@ def compute_distance(ref_path, rec_path):
     # Compute the nearest point on the reference mesh for each vertex of the reconstructed mesh
     closest_points, distance, triangle_id = ref_mesh.nearest.on_surface(rec_mesh.vertices)
 
-    # Compute the mean distance
     mean_distance = np.mean(distance)
 
     return mean_distance

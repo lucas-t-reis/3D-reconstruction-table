@@ -1,12 +1,17 @@
 import serial
 import threading
+
 from time import sleep
 
+from webcam import Camera 
 from intelcamera import IntelCamera
 
-camera = IntelCamera()
-camera.config_profile()
-video_thread = threading.Thread(target = camera.capture_video, kwargs={'duration' : 25})
+# camera = IntelCamera()
+camera = Camera()
+
+# camera.config_profile()
+video_thread = threading.Thread(target = camera.capture_video, kwargs={'duration' : 30})
+
 DEFAULT_MESSAGE = 'c - Clockwise | C - Counter clockwise: '
 
 # TODO Use ls -l /dev/ttyACM* + grep to fetch port name
@@ -26,6 +31,11 @@ while(data := input(DEFAULT_MESSAGE).encode('utf-8')):
     connection.write(data)
     response = connection.readline()
     print(response)
-
+    connection.write(data)
+    response = connection.readline()
+    print(response)
+    connection.write(data)
+    response = connection.readline()
+    print(response)
 
 video_thread.join()

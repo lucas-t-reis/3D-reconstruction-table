@@ -10,7 +10,7 @@ class IntelCamera:
         self.model = 'D435i'
 
     def config_profile(self, width: int = 640, height: int = 480, fps: int = 30):
-        # self.profile.enable_stream(rs.stream.depth, width, height, rs.format.z16, fps)
+        self.profile.enable_stream(rs.stream.depth, width, height, rs.format.z16, fps)
         self.profile.enable_stream(rs.stream.color, width, height, rs.format.rgb8, fps)
 
     def capture_frame(self):
@@ -103,6 +103,7 @@ class IntelCamera:
             cv2.destroyAllWindows()
             self.pipeline.stop()
 
+    # TODO: Fix resource busy when this function is called
     def record_rgbd(self, duration=5, filename='output'):
         # Start the pipeline with a configuration that enables recording
         self.profile.enable_record_to_file(f'{filename}.bag')
