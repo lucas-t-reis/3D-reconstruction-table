@@ -17,8 +17,8 @@ class Camera:
         return frame
 
     def capture_video(self, duration, output_file = 'output'):
-            # Prompt the user to select a webcam
-        # webcam = input("Select a webcam (enter '0' for built-in or '1' for USB): ")
+        # TODO: Fetch webcam id dinamically
+        print("Depending on the hardware you are running, the webcam ID might change.\nOpen 'Camera.py' file and navigate to capture_video to modify the default id.")
         webcam = int(2)
 
         # Open the first webcam device

@@ -110,6 +110,4 @@ class IntelCamera:
         self.pipeline.start(self.config)
         
         time.sleep(duration)
-        
-        # Stop the pipeline
         self.pipeline.stop()
